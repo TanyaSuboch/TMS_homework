@@ -8,7 +8,6 @@ class Gun():
         self.caliber = caliber
         self.barrel_length = barrel_length
 
-    
     def is_on_target(self):
         """Returns the result of gun's attack - either reached the target or not.
 
