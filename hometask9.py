@@ -107,7 +107,7 @@ class HArmour(Armour):
 
 
 #g1 = Gun(15, 25)
-a1 = Ammo(15, 25, 'explosive')
+#a1 = Ammo(15, 25, 'explosive')
 
 if __name__ == '__main__':
     print(a1.type)  
