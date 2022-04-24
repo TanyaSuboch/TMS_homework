@@ -1,0 +1,63 @@
+PRAGMA foreign_keys = 0;
+
+CREATE TABLE sqlitestudio_temp_table AS SELECT *
+                                          FROM studentsdata;
+
+DROP TABLE studentsdata;
+
+CREATE TABLE studentsdata (
+    student_id    INTEGER (3),
+    student_name  STRING (15),
+    student_age   INTEGER (2),
+    student_class INTEGER (3) REFERENCES classes (class_number) ON DELETE NO ACTION
+                                                                ON UPDATE NO ACTION
+                                                                MATCH SIMPLE,
+    day           STRING (15) 
+);
+
+INSERT INTO studentsdata (
+                             student_id,
+                             student_name,
+                             student_age,
+                             student_class,
+                             day
+                         )
+                         SELECT student_id,
+                                student_name,
+                                student_age,
+                                student_class,
+                                day
+                           FROM sqlitestudio_temp_table;
+
+DROP TABLE sqlitestudio_temp_table;
+
+PRAGMA foreign_keys = 1;
+
+
+
+
+PRAGMA foreign_keys = 0;
+
+CREATE TABLE sqlitestudio_temp_table AS SELECT *
+                                          FROM classes;
+
+DROP TABLE classes;
+
+CREATE TABLE classes (
+    class_number           INTEGER (3) REFERENCES studentsdata (student_class) ON DELETE NO ACTION
+                                                                               ON UPDATE NO ACTION
+                                                                               MATCH SIMPLE,
+    [screen_availability ] STRING (3) 
+);
+
+INSERT INTO classes (
+                        class_number,
+                        [screen_availability ]
+                    )
+                    SELECT class_number,
+                           "screen_availability "
+                      FROM sqlitestudio_temp_table;
+
+DROP TABLE sqlitestudio_temp_table;
+
+PRAGMA foreign_keys = 1;
