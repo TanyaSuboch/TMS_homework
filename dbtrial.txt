@@ -1,0 +1,176 @@
+TASK 1
+
+#one-to-one
+CREATE TABLE clients(
+    id INTEGER PRIMARY KEY,
+    client_name TEXT NOT NULL,
+    client_surname TEXT NOT NULL
+);
+
+INSERT INTO clients(id, client_name, client_surname) VALUES(1, "Olga", "Ivanova");
+INSERT INTO clients(id, client_name, client_surname) VALUES(2, "Aleksandr", "Sidorov");
+INSERT INTO clients(id, client_name, client_surname) VALUES(3, "Yuliya", "Petrova");
+
+CREATE TABLE accounts(
+    id INTEGER PRIMARY KEY,
+    login TEXT NOT NULL,
+    password TEXT NOT NULL,
+    client_id INTEGER UNIQUE NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id)
+);
+
+INSERT INTO accounts(id, login, password, client_id) VALUES(1, yp1963, fkfjn, 3);
+INSERT INTO accounts(id, login, password, client_id) VALUES(2, oi1994, hklgl, 1);
+INSERT INTO accounts(id, login, password, client_id) VALUES(3, al1987, gklld, 2);
+
+
+#one-to-many
+CREATE TABLE clients(
+    id INTEGER PRIMARY KEY,
+    client_name TEXT NOT NULL,
+    client_surname TEXT NOT NULL  
+);
+
+INSERT INTO clients(id, client_name, client_surname) VALUES(1, "Olga", "Ivanova");
+INSERT INTO clients(id, client_name, client_surname) VALUES(2, "Aleksandr", "Sidorov");
+INSERT INTO clients(id, client_name, client_surname) VALUES(3, "Yuliya", "Petrova");
+
+CREATE TABLE phone_numbers(
+    phone_number_id INTEGER PRIMARY KEY,
+    phone_number TEXT NOT NULL,
+    telephone_company TEXT NOT NULL,
+    client_id INTEGER NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id)
+);
+
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(1, 291658932, "A1", 2);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(2, 296447238, "A1", 1);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(3, 293264987, "A1", 3);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(4, 335986324, "MTC", 3);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(5, 256324859, "life", 2);
+
+
+
+#many-to-many
+CREATE TABLE clients(
+    id INTEGER PRIMARY KEY,
+    client_name TEXT NOT NULL,
+    client_surname TEXT NOT NULL
+);
+
+CREATE TABLE services(
+    id INTEGER PRIMARY KEY,
+    description TEXT NOT NULL,
+    tariff INTEGER NOT NULL
+);
+
+CREATE TABLE clients_services(
+    id INTEGER PRIMATY KEY,
+    client_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id),
+    FOREIGN KEY (service_id) REFERENCES services(id)
+);
+
+
+
+TASK 2
+CREATE TABLE clients(
+    id INTEGER PRIMARY KEY,
+    client_name TEXT NOT NULL,
+    client_surname TEXT NOT NULL
+);
+
+INSERT INTO clients(id, client_name, client_surname) VALUES(1, "Olga", "Ivanova");
+INSERT INTO clients(id, client_name, client_surname) VALUES(2, "Aleksandr", "Sidorov");
+INSERT INTO clients(id, client_name, client_surname) VALUES(3, "Yuliya", "Petrova");
+
+CREATE TABLE phone_numbers(
+    phone_number_id INTEGER PRIMARY KEY,
+    phone_number TEXT NOT NULL,
+    telephone_company TEXT NOT NULL,
+    client_id INTEGER NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id)
+);
+
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(1, 291658932, "A1", 2);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(2, 296447238, "A1", 1);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(3, 293264987, "A1", 3);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(4, 335986324, "MTC", 3);
+INSERT INTO phone_numbers(phone_number_id, phone_number, telephone_company, client_id) 
+VALUES(5, 256324859, "life", 2);
+
+SELECT id, client_name, client_surname, P.phone_number, P.telephone_company 
+FROM clients JOIN phone_numbers P WHERE clients.id == P.client_id
+
+SELECT * FROM clients C LEFT OUTER JOIN phone_numbers P ON C.id == P.client_id
+
+SELECT * FROM clients C RIGHT OUTER JOIN phone_numbers P ON C.id == P.client_id
+
+SELECT * FROM clients C FULL OUTER JOIN phone_numbers P ON C.id == P.client_id
+
+#for cross join
+CREATE TABLE clients(
+    client_name TEXT NOT NULL
+);
+
+CREATE TABLE services(
+    service TEXT NOT NULL
+);
+
+SELECT * FROM clients CROSS JOIN services
+
+
+TASK 3
+
+#база данных authors_and_books
+
+CREATE TABLE authors(
+    id INTEGER PRIMARY KEY,
+    author_name TEXT NOT NULL  
+);
+
+INSERT INTO authors(id, author_name) VALUES(1, "Иван Тургенев");
+INSERT INTO authors(id, author_name) VALUES(2, "Михаил Булгаков");
+
+CREATE TABLE books(
+    book_id INTEGER PRIMARY KEY,
+   name TEXT NOT NULL,
+    author_id INTEGER NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES authors(id)
+); 
+
+INSERT INTO books(book_id, name, author_id) VALUES(1, "Отцы и дети", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(2, "Мастер и Маргарита", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(3, "Дворянское гнездо", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(4, "Ася", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(5, "Записки юного врача", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(6, "Собачье сердце", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(7, "Первая любовь", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(8, "Белая гвардия", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(9, "Муму", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(10, "Морфий", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(11, "Заколдованное место", 2);
+
+CREATE TABLE authors_with_books AS SELECT * FROM authors LEFT JOIN books ON authors.id == books.author_id 
+#сохраним как таблицу authors_with_books
+
+CREATE TABLE author_max_number_of_books AS
+SELECT author_name, MAX (number_of_books)
+FROM (SELECT author_name, book_id, COUNT(book_id) number_of_books
+FROM authors_with_books
+GROUP BY author_name)
+#сохраним как таблицу author_max_number_of_books
+
+TASK 4
+
+CREATE TABLE bulgakov_books AS SELECT book_id, name, author_id FROM books WHERE author_id = (SELECT id FROM authors WHERE author_name = "Михаил Булгаков")
