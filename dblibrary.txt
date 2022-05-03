@@ -1,0 +1,30 @@
+sqlite3 library.db
+
+CREATE TABLE authors_lib(
+    id INTEGER PRIMARY KEY,
+    author_name TEXT NOT NULL  
+);
+
+INSERT INTO authors(id, author_name) VALUES(1, "Иван Тургенев");
+INSERT INTO authors(id, author_name) VALUES(2, "Михаил Булгаков");
+
+CREATE TABLE books(
+    book_id INTEGER PRIMARY KEY,
+   name TEXT NOT NULL,
+    author_id INTEGER NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES authors(id)
+); 
+
+INSERT INTO books(book_id, name, author_id) VALUES(1, "Отцы и дети", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(2, "Мастер и Маргарита", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(3, "Дворянское гнездо", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(4, "Ася", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(5, "Записки юного врача", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(6, "Собачье сердце", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(7, "Первая любовь", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(8, "Белая гвардия", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(9, "Муму", 1);
+INSERT INTO books(book_id, name, author_id) VALUES(10, "Морфий", 2);
+INSERT INTO books(book_id, name, author_id) VALUES(11, "Заколдованное место", 2);
+
+CREATE TABLE authors_with_books AS SELECT * FROM authors LEFT JOIN books ON authors.id == books.author_id
