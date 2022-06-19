@@ -129,4 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'

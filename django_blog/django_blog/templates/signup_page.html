@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+<h2>Sign Up</h2>
+<div class="row">
+  <div class="col-lg-6">
+    <a href='{% url 'signup_reader' %}'>I am a Reader</a>
+  </div>
+  <div class="col-lg-6">
+    <a href='{% url 'signup_author' %}'>I am an Author</a>
+  </div>
+</div>
+{% endblock content %}
