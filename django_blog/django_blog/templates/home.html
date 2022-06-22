@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+{% if user.is_authenticated %}
+        <p>Hi {{ user.username }}, you are logged in! You can add new post.</p>
+        <p><a href="{% url 'logout' %}">Log Out</a></p>
+        <a href="{% url 'post_new' %}">Add New Post</a>
+      {% else %}
+        <p>You are not logged in. Please log in to add new post.</p>
+        <a href="{% url 'login' %}">Log In</a>
+      {% endif %}
+  {% for post in object_list %}
+    <div class="post-entry">
+      <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+      <h6>*{{post.category}}*</h6>
+      <p>{{ post.body }}</p>
+    </div>
+  {% endfor %}
+{% endblock content %}
